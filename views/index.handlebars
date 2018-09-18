@@ -1,0 +1,98 @@
+<div class="container-fluid">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-3">Back Logger</h1>
+            <p class="lead">Welcome to BackLogger, a website where you can keep track of and manage your media back log.</p>
+            <hr>
+            {{!-- <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Add Media</label>
+                    <input type="text" class="form-control" id="mediaInput" placeholder="Add Media to Backlog">
+                </div>
+                <button type="submit" class="btn btn-primary" id="add">Submit</button>
+            </form> --}}
+        </div>
+    </div>
+    <div class="row mb-10">
+
+        <div class="col-md-6">
+            <div class="card mx-auto" style="width: 22rem;">
+                <div class="card-header">
+                    Media Left to Consume
+                </div>
+                <ul class="list-group list-group-flush">
+                    {{#each media}}
+                        {{#unless completed}}
+                            <li class="list-group-item">
+                                {{media_name}}
+                                <button type="button" class="btn-sm btn-primary mark-complete" data-id="{{id}}"> Consume </button>
+                            </li>
+                        {{/unless}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-6">
+                <div class="card mx-auto" style="width: 22rem;">
+                    <div class="card-header">
+                        Consumed Media
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {{#each media}}
+                            {{#if completed}}
+                                <li class="list-group-item">
+                                    {{media_name}}
+                                </li>
+                            {{/if}}
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row"></div>
+    </div>
+</div>
+<div class="footer bg-dark">
+    <div class="container">
+            <form class="p-3">
+                <div class="form-group">
+                    <label for="input" class="text-light">Add Media</label>
+                    <input type="text" class="form-control" id="mediaInput" placeholder="Add Media to Backlog">
+                </div>
+                <button type="submit" class="btn btn-primary" id="add">Submit</button>
+            </form>
+    </div>
+</div>
+
+<script>
+
+    $("#add").on("click", function(event) {
+        event.preventDefault();
+
+        var newMedia = {
+            media_name: $("#mediaInput").val()
+        }
+        
+        $.post("/api/media", newMedia)
+        .then(function(data) {
+            console.log(data)
+            location.reload();
+        })
+    })
+
+    $(".mark-complete").on("click", function(event) {
+        event.preventDefault();
+
+        var id = $(this).data("id");
+        console.log(id)
+
+        $.ajax("/api/media/"+id, {
+            type: "PUT"
+        })
+        .then(function(data) {
+            location.reload();
+        })
+    })
+
+</script>

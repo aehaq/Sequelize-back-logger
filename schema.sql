@@ -1,0 +1,3 @@
+CREATE DATABASE mediaDB;
+
+USE mediaDB;
