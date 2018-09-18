@@ -7,6 +7,7 @@ The original Back-Logger app is located on GitHub here: https://github.com/aehaq
 
 # Link to Deployed Site
 [Back Logger](https://back-logger.herokuapp.com/)
+
 Note: This link will take you to the original Back-Logger App, created without use of Sequelize.
 
 # Images
